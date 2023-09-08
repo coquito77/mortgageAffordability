@@ -12,6 +12,6 @@ The data source for this analysis is from the Federal Reserve Bank of St. Louis 
 
 ![Scatter Plot County Population vs Household SNAP.](figures/trendLineMoPymsOvrHHInc.png)
 
-A Tabelua visualization can be found [here]( https://public.tableau.com/app/profile/m.ev1333/viz/MorgageAffordabilityIndexForCaliforniaHomes/Dashboard1).
+A Tabelua visualization can be found [here](https://public.tableau.com/app/profile/m.ev1333/viz/MorgageAffordabilityIndexForCaliforniaHomes/Dashboard1#1).
 
 
