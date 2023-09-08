@@ -75,7 +75,8 @@ attributes(MEHOINUSCAA672N)$comment
 attributes(MEDLISPRICA)$comment
 attributes(MORTGAGE30US)$commen
 
-# take the monthly median price and get the principal mortgage rate and estimate the
+# take the 80% monthly median price per home (assume there is a 20% downpayment on the loan)
+# get the principal mortgage interest rate and estimate the
 # loan payment Interest plus principal
 
 MEDLISPRICA %>% 
@@ -85,7 +86,7 @@ MEDLISPRICA %>%
   mutate(Mnth_30_Yr_Fixd_Rate_Mrtg_Avrg = zoo::na.locf(Mnth_30_Yr_Fixd_Rate_Mrtg_Avrg, na.rm = FALSE),
          monthly_rate = Mnth_30_Yr_Fixd_Rate_Mrtg_Avrg / 100 / 12,      # from here
          r = (1 + monthly_rate) ^ 360 - 1,                            #https://masterr.org/r/calculate-mortgage-payment-schedule/
-         payment = Mnth_Hsng_Inv_Medn_Lstn_Pric_in_Cal * monthly_rate * (r + 1) / r) -> estPrincipPayment
+         payment = (Mnth_Hsng_Inv_Medn_Lstn_Pric_in_Cal *.8) * monthly_rate * (r + 1) / r) -> estPrincipPayment
 
 # get the ratio of payment over the HH income
 
@@ -190,11 +191,11 @@ dat %>%
              color = "blue", linewidth = .1
              ,linetype = "dashed"
              ,alpha = .8) +
-  annotate(geom = "text", x = as.Date("2020-03-04"), y = .5,
+  annotate(geom = "text", x = as.Date("2020-03-04"), y = .1,
            colour = "grey25",
            label = "March 4, 2021\nGovernor Newsom\ndeclares a proclamation of\n state of emergency\nover COVID19",
            hjust = 1) +
-  annotate(geom = "text", x = as.Date("2017-03-04"), y = .34,
+  annotate(geom = "text", x = as.Date("2017-03-04"), y = .24,
            colour = "#31a354",
            label = "Green lines show estimated\ntrends based on structural change.",
            hjust = 0) +
@@ -202,12 +203,12 @@ dat %>%
              color = "blue", linewidth = .1
              ,linetype = "dashed"
              ,alpha = .8) +
-  annotate(geom = "text", x = as.Date("2023-02-28"), y = .5,
+  annotate(geom = "text", x = as.Date("2023-02-28"), y = .1,
            colour = "grey25",
            label = "February 28, 2023\nGovernor Newsom\ndeclares termination of\n state of emergency\nover COVID19",
            hjust = 1) +
   scale_x_date(breaks = pretty_breaks(6)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, .8)) +
   labs(title = "Mortgage Affordability Index for California Homes and Household Income",
        x = "Month",
        y ="Ratio Monthly Payment Over Monthly Household Income",
