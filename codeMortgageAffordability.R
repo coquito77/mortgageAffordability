@@ -10,6 +10,7 @@ library(fredr)
 library(scales)
 
 dsrFolder <- "~/GitHub/mortgageAffordability"
+
 ifelse(
   !dir.exists(file.path(dsrFolder))
   , dir.create(file.path(dsrFolder))
@@ -166,5 +167,57 @@ dat %>%
   labs(title = "Mortgage Affordability Index for California Homes and Household Income",
        x = "Month",
        y ="Ratio Monthly Payment Over Monthly Household Income")
+
+ifelse(
+  !dir.exists(file.path("./figures"))
+  , dir.create(file.path("./figures"))
+  , FALSE)
+
+Cairo::Cairo(file = "./figures/trendLineMoPymsOvrHHInc.png"
+             ,type="png",
+             units="px", 
+             width = 680, 
+             height = 580, 
+             pointsize = 12, 
+             dpi = 90)
+
+dat %>% 
+  ggplot() +
+  geom_line(aes(x = date, y = mo_payment_ovr_Mo_HHInc), alpha = .7) +
+  geom_smooth(se = FALSE, method = lm, linetype = 'twodash', color = alpha("#31a354", 0.8),
+              aes(x = date, y = mo_payment_ovr_Mo_HHInc, group = rows)) +
+  geom_vline(aes(xintercept = as.Date("2020-03-04")),
+             color = "blue", linewidth = .1
+             ,linetype = "dashed"
+             ,alpha = .8) +
+  annotate(geom = "text", x = as.Date("2020-03-04"), y = .5,
+           colour = "grey25",
+           label = "March 4, 2021\nGovernor Newsom\ndeclares a proclamation of\n state of emergency\nover COVID19",
+           hjust = 1) +
+  annotate(geom = "text", x = as.Date("2017-03-04"), y = .34,
+           colour = "#31a354",
+           label = "Green lines show estimated\ntrends based on structural change.",
+           hjust = 0) +
+  geom_vline(aes(xintercept = as.Date("2023-02-28")),
+             color = "blue", linewidth = .1
+             ,linetype = "dashed"
+             ,alpha = .8) +
+  annotate(geom = "text", x = as.Date("2023-02-28"), y = .5,
+           colour = "grey25",
+           label = "February 28, 2023\nGovernor Newsom\ndeclares termination of\n state of emergency\nover COVID19",
+           hjust = 1) +
+  scale_x_date(breaks = pretty_breaks(6)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +
+  labs(title = "Mortgage Affordability Index for California Homes and Household Income",
+       x = "Month",
+       y ="Ratio Monthly Payment Over Monthly Household Income",
+       caption = "Source: Federal Reserve Bank of St. Louis FRED, 
+       MEHOINUSCAA672N Annual, Real Median Household Income in California
+       MEHOINUSARA672N Monthlyl Housing Inventory: Median Listing Price in California
+       MORTGAGE30US Weekly 30-Year Fixed Rate Mortgage Average in the United States")
+
+dev.off()
+
+system(paste0('open "', "./figures/trendLineMoPymsOvrHHInc.png", '"'))
 
 # https://public.tableau.com/app/profile/m.ev1333/viz/MorgageAffordabilityIndexForCaliforniaHomes/Dashboard1#1
