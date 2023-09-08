@@ -1,7 +1,5 @@
-# Mortgage Affodabilty Index
-Mortgage Affodabilty ratio based on mortage paytment as a share of HH income for California
-
-# CalFreshParticipation
+# Mortgage Affordability Index
+Mortgage Affordability ratio based on mortgage payment as a share of HH income for California
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -12,6 +10,4 @@ The data source for this analysis is from the Federal Reserve Bank of St. Louis 
 
 ![Scatter Plot County Population vs Household SNAP.](figures/trendLineMoPymsOvrHHInc.png)
 
-A Tabelua visualization can be found [here](https://public.tableau.com/app/profile/m.ev1333/viz/MorgageAffordabilityIndexForCaliforniaHomes/Dashboard1#1).
-
-
+A Tableau visualization can be found [here](https://public.tableau.com/app/profile/m.ev1333/viz/MorgageAffordabilityIndexForCaliforniaHomes/Dashboard1#1).
