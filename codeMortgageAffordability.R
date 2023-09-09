@@ -20,6 +20,8 @@ setwd(dsrFolder)
 
 theme_set(theme_minimal())
 
+keyring::key_get("FRED_KEY", "fred_key") # your FRED key at https://fred.stlouisfed.org/docs/api/api_key.html
+
 if(FALSE) fredr_series_search_text(
   search_text = "Real Median") %>%
   view("SeriesInfo")
